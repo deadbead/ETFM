@@ -1,8 +1,8 @@
 <template>
-    <fieldset class="ticker" :class="'cur-' + currency" :title="name">
-      <legend>{{ secid }}</legend>
-      <span>{{ value }}</span>
-    </fieldset>
+  <fieldset class="ticker" :class="'cur-' + currency" :title="moex">
+    <legend>{{ secid }}</legend>
+    <span>{{ value }}</span>
+  </fieldset>
 </template>
 
 <script>
@@ -64,5 +64,5 @@ export default {
   padding: 10px
   margin: 10px
   & legend
-   font-weight: bolder
+    font-weight: bolder
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <fieldset class="currency" :class="'cur-' + secid" :title="name">
+  <fieldset class="currency" :class="'cur-' + secid" :title="moex">
     <legend>{{ secid }}</legend>
     <span>{{ value }}</span>
   </fieldset>
@@ -9,31 +9,35 @@
 import axios from "axios";
 export default {
   name: "TheCurrency",
-  props: ["secid"],
+  props: ["secid", "to"],
   data() {
     return { moex: [] };
   },
   computed: {
-    name() {
-      return this.moex[0];
+    date() {
+      let d = new Date();
+      d.setDate(d.getDate() - 10);
+      const ye = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d);
+      const mo = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(d);
+      const da = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d);
+
+      return `${ye}-${mo}-${da}`;
     },
     value() {
-      return this.moex[1];
-    },
-    currency() {
-      return this.moex[2];
+      return this.moex ? this.moex[0] : "";
     },
   },
   mounted() {
     let url =
-      "https://iss.moex.com/iss" +
-      "/engines/stock" +
-      "/markets/shares" +
-      "/boards/" +
-      this.board +
+      "https://iss.moex.com/iss/statistics" +
+      "/engines/futures" +
+      "/markets/indicativerates" +
       "/securities/" +
       this.secid +
-      ".json?iss.meta=off&iss.only=securities&securities.columns=SECNAME,PREVADMITTEDQUOTE,CURRENCYID";
+      "/" +
+      this.to +
+      ".json?iss.meta=off&iss.only=securities&securities.columns=rate,tradedate,tradetime&from=" +
+      this.date;
     axios
       .get(url)
       .then((response) => (this.moex = response.data.securities?.data[0]))
@@ -59,7 +63,7 @@ export default {
     color: darkred
     content: '₽'
 
-.ticker
+.currency
   display: inline-block
   padding: 10px
   margin: 10px

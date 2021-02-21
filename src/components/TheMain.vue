@@ -6,16 +6,19 @@
     SUR: <input v-model="up.sur" /> USD: <input v-model="up.usd" />
     <hr />
     -->
+    <hr />
     <TheCurrency
       v-for="currency in currencies"
       :key="currency.secid"
       v-bind="currency"
+      to="RUB"
     />
   </div>
 </template>
 
 <script>
 import TheTicker from "./TheTicker.vue";
+import TheCurrency from "./TheCurrency.vue";
 export default {
   name: "Main view",
   data() {
@@ -41,24 +44,10 @@ export default {
   },
   components: {
     TheTicker,
+    TheCurrency,
   },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
 </style>
