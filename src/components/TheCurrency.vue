@@ -1,5 +1,5 @@
 <template>
-  <fieldset class="currency" :class="'cur-' + secid" :title="moex">
+  <fieldset class="currency" :class="'cur-' + to" :title="moex">
     <legend>{{ secid }}</legend>
     <span>{{ value }}</span>
   </fieldset>
@@ -24,7 +24,7 @@ export default {
       return `${ye}-${mo}-${da}`;
     },
     value() {
-      return this.moex ? this.moex[0] : "";
+      return this.moex ? this.moex[0] : "???";
     },
   },
   mounted() {
@@ -51,14 +51,8 @@ export default {
 <style lang="sass" scoped>
 @import '../mq'
 
-.cur-USD
-  border: 1px solid darkgreen
-  & span::before
-    color: darkgreen
-    content: '$'
-
-.cur-SUR
-  border: 1px solid darkred
+.cur-RUB
+  border: 1px solid
   & span::after
     color: darkred
     content: '₽'
